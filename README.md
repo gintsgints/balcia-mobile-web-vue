@@ -13,6 +13,10 @@ npm install
 pnpm install
 ```
 
+### AWS Cognito config
+
+Copy file .env.local.example to .env.local and add required variables from your cognito configuration
+
 ### Compiles and hot-reloads for development
 
 ```

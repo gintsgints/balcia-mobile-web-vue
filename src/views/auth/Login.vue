@@ -1,4 +1,5 @@
 <template>
+  {{ test }}
   <div class="d-flex align-center justify-center" style="height: 100vh">
       <v-sheet width="400" class="mx-auto">
           <v-form fast-fail @submit.prevent="login">
@@ -18,12 +19,41 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref } from 'vue'
+  import { useRouter } from 'vue-router'
+  import { CognitoUserPool, AuthenticationDetails, CognitoUser } from "amazon-cognito-identity-js"
+  import poolData from "./poolData"
+
+  const router = useRouter()
 
   const username = ref('')
   const password = ref('')
 
   const login = () => {
-    console.log("Start login process")
+    const authenticationData = {
+      Username: username.value,
+      Password: password.value
+    }
+
+    let authenticationDetails = new AuthenticationDetails(authenticationData)
+
+    const userPool = new CognitoUserPool(poolData)
+
+    const userData = {
+      Username: username.value,
+      Pool: userPool
+    }
+
+    const cognitoUser = new CognitoUser(userData)
+
+    cognitoUser.authenticateUser(authenticationDetails, {
+      onSuccess: (result) => {
+        console.log("Successeful login: ", result)
+        router.push('me')
+      },
+      onFailure: (error) => {
+        console.log("Failed to log in: ", error)
+      }
+    })
   }
 </script>
