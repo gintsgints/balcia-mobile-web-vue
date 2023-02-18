@@ -22,6 +22,10 @@ const routes = [
         path: 'auth/register',
         name: 'Register',
         component: () => import(/* webpackChunkName: "register" */ '@/views/auth/Register.vue'),
+      },{
+        path: 'auth/pin',
+        name: 'ShowPin',
+        component: () => import(/* webpackChunkName: "register" */ '@/views/auth/ShowPin.vue'),
       },
     ],
   },
