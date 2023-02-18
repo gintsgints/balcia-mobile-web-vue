@@ -1,9 +1,9 @@
 <template>
-  <v-app-bar flat>
+  <v-app-bar>
     <v-app-bar-title>
-      <v-icon icon="mdi-circle-slice-6" />
+      <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
-      Essentials Preset
+      Insurance pro
     </v-app-bar-title>
   </v-app-bar>
 </template>
