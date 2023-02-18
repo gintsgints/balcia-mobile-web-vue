@@ -1,29 +1,47 @@
 <template>
-  <div class="d-flex align-center justify-center" style="height: 100vh">
-      <v-sheet width="400" class="mx-auto">
-          <v-form fast-fail @submit.prevent="login">
-              <v-text-field v-model="username" label="User Name"></v-text-field>
-
-              <v-text-field v-model="password" label="password"></v-text-field>
-              <a href="#" class="text-body-2 font-weight-regular">Forgot Password?</a>
-
-              <v-btn type="submit" color="primary" block class="mt-2">Sign in</v-btn>
-
-          </v-form>
-          <div class="mt-2">
-              <p class="text-body-2">Don't have an account? <a href="#">Sign Up</a></p>
-          </div>
-      </v-sheet>
-  </div>
+  <v-form ref="form" validate-on="submit" @submit.prevent="submit">
+    <v-container>
+      <v-text-field label="E-mail" type="email" :error-messages="username.errorMessage.value" v-model="username.value.value"></v-text-field>
+      <v-text-field label="Personal code:" :error-messages="rc.errorMessage.value" v-model="rc.value.value"></v-text-field>
+      <v-text-field label="Password" :error-messages="password.errorMessage.value" v-model="password.value.value" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+        :type="show1 ? 'text' : 'password'" @click:append="show1 = !show1"></v-text-field>
+      <v-text-field :error-messages="confirmPassword.errorMessage.value" v-model="confirmPassword.value.value" label="Password repeat" required
+        :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'" :type="show2 ? 'text' : 'password'"
+        @click:append="show2 = !show2"></v-text-field>
+      <v-btn type="submit">Register</v-btn>
+    </v-container>
+  </v-form>
 </template>
 
+
 <script lang="ts" setup>
-  import { ref } from 'vue';
+import { ref } from 'vue';
+import { useField, useForm } from 'vee-validate'
 
-  const username = ref('')
-  const password = ref('')
-
-  const login = () => {
-
+const { handleSubmit } = useForm({
+  validationSchema: {
+    username(value: string) {
+      if (/^[a-z.-]+@[a-z.-]+\.[a-z]+$/i.test(value)) return true
+      return 'Must be a valid e-mail.'
+    },
+    password(value: string) {
+      if (value?.length >= 2) return true
+      return 'Please provide password'
+    },
+    confirmPassword(value: string) {
+      if (value?.length >= 2) return true
+      return 'Please provide password'
+    },
   }
+})
+const username = useField<string>('username')
+const password = useField<string>('password')
+const rc = useField<string>('rc')
+const confirmPassword = useField<string>('confirmPassword')
+const show1 = ref(false)
+const show2 = ref(false)
+
+const submit = handleSubmit(values => {
+  console.log("Proceed with registration: ", values)
+})
 </script>
