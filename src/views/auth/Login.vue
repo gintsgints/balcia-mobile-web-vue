@@ -20,6 +20,7 @@
 import { CognitoUserPool, AuthenticationDetails, CognitoUser } from "amazon-cognito-identity-js"
 import { ref } from 'vue'
 import { useField, useForm } from 'vee-validate'
+import * as yup from 'yup';
 import { useRouter } from 'vue-router'
 import { useTokenStore } from "@/store/auth/tokenStore";
 import poolData from "./poolData"
@@ -28,17 +29,14 @@ const router = useRouter()
 const tokenStore = useTokenStore()
 
 const show = ref(false)
+const schema = yup.object({
+  username: yup.string().email().required(),
+  password: yup.string().required(),
+  confirmPassword: yup.string().required()
+})
+
 const { handleSubmit } = useForm({
-  validationSchema: {
-    username (value: string) {
-      if (/^[a-z.-]+@[a-z.-]+\.[a-z]+$/i.test(value)) return true
-      return 'Must be a valid e-mail.'
-    },
-    password (value: string) {
-      if (value?.length >= 2) return true
-      return 'Please provide password'
-    },
-  }
+  validationSchema: schema
 })
 const username = useField<string>('username')
 const password = useField<string>('password')
