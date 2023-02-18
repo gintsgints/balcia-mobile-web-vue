@@ -18,12 +18,14 @@
 </template>
 
 <script lang="ts" setup>
+  import { CognitoUserPool, AuthenticationDetails, CognitoUser } from "amazon-cognito-identity-js"
   import { ref } from 'vue'
   import { useRouter } from 'vue-router'
-  import { CognitoUserPool, AuthenticationDetails, CognitoUser } from "amazon-cognito-identity-js"
+  import { useTokenStore } from "@/store/auth/tokenStore";
   import poolData from "./poolData"
 
   const router = useRouter()
+  const tokenStore = useTokenStore()
 
   const username = ref('')
   const password = ref('')
@@ -48,7 +50,8 @@
     cognitoUser.authenticateUser(authenticationDetails, {
       onSuccess: (result) => {
         console.log("Successeful login: ", result)
-        router.push('me')
+        tokenStore.setTokens(result)
+        router.push('/me')
       },
       onFailure: (error) => {
         console.log("Failed to log in: ", error)
