@@ -31,8 +31,7 @@ const tokenStore = useTokenStore()
 const show = ref(false)
 const schema = yup.object({
   username: yup.string().email().required(),
-  password: yup.string().required(),
-  confirmPassword: yup.string().required()
+  password: yup.string().required()
 })
 
 const { handleSubmit } = useForm({
