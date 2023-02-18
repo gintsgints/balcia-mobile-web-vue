@@ -2,12 +2,12 @@ import { CognitoUserSession, CognitoIdToken, CognitoAccessToken, CognitoRefreshT
 import { defineStore } from 'pinia'
 
 export const useTokenStore = defineStore('user', {
-  state: (): CognitoUserSession => {
-    return new CognitoUserSession({
-      IdToken: new CognitoIdToken({IdToken: ""}),
-      AccessToken: new CognitoAccessToken({AccessToken: ""}),
-      RefreshToken: new CognitoRefreshToken({RefreshToken: ""})
-    })
+  state: (): CognitoUserSession | {} => {
+    return {
+      idToken: {},
+      refreshToken: {},
+      accessToken: {}
+    }
   },
   actions: {
     setTokens(tokens: CognitoUserSession) {
