@@ -26,6 +26,7 @@ const resenConfirmEmail = () => {
     onFailure: (err) => {
       console.log("Failed to send confirmation e-mail", err)
     },
+    // @ts-ignore
     inputVerificationCode: null,
   })
 }
