@@ -1,7 +1,7 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import { useTokenStore } from "@/store/auth/tokenStore"
+import { useAuthStore } from "@/store/authStore"
 
 const routes = [
   {
@@ -43,8 +43,8 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from) => {
-  const tokenStore = useTokenStore()
-  const { isLoggedIn } = storeToRefs(tokenStore)
+  const authStore = useAuthStore()
+  const { isLoggedIn } = storeToRefs(authStore)
   if (to.meta.requiresAuth && !isLoggedIn.value) {
     return {
       path: '/auth/login',

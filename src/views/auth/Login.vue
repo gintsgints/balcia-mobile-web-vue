@@ -22,11 +22,11 @@ import { ref } from 'vue'
 import { useField, useForm } from 'vee-validate'
 import * as yup from 'yup';
 import { useRouter } from 'vue-router'
-import { useTokenStore } from "@/store/auth/tokenStore";
+import { useAuthStore } from "@/store/authStore";
 import poolData from "./poolData"
 
 const router = useRouter()
-const tokenStore = useTokenStore()
+const authStore = useAuthStore()
 
 const show = ref(false)
 const schema = yup.object({
@@ -59,7 +59,7 @@ const submit = handleSubmit(values => {
 
   cognitoUser.authenticateUser(authenticationDetails, {
     onSuccess: (result) => {
-      tokenStore.setTokens(result)
+      authStore.setAuth(result, cognitoUser)
       router.push('/me')
     },
     onFailure: (error) => {
