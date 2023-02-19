@@ -17,11 +17,16 @@ const routes = [
         name: 'Me',
         meta: { requiresAuth: true },
         component: () => import(/* webpackChunkName: "me" */ '@/views/Me.vue'),
-      },{
+      }, {
         path: 'auth/login',
         name: 'Login',
         meta: { requiresAuth: false },
         component: () => import(/* webpackChunkName: "login" */ '@/views/auth/Login.vue'),
+      }, {
+        path: 'auth/forgot',
+        name: 'Forgot',
+        meta: { requiresAuth: false },
+        component: () => import(/* webpackChunkName: "forgot" */ '@/views/auth/Forgot.vue'),
       },{
         path: 'auth/register',
         name: 'Register',
@@ -37,6 +42,11 @@ const routes = [
         name: 'ConfirmEmail',
         meta: { requiresAuth: true },
         component: () => import(/* webpackChunkName: "confirm" */ '@/views/auth/ConfirmEmail.vue'),
+      }, {
+        path: 'auth/forgotpasswordupdate',
+        name: 'ForgotPasswordUpdate',
+        meta: { requiresAuth: false },
+        component: () => import(/* webpackChunkName: "forgotpasswordupdate" */ '@/views/auth/ForgotPasswordUpdate.vue'),
       },
     ],
   },
