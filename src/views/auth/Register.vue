@@ -22,35 +22,12 @@ import { CognitoUserPool, CognitoUserAttribute } from "amazon-cognito-identity-j
 import { ref } from 'vue';
 import { useField, useForm } from 'vee-validate'
 import { useRouter } from 'vue-router'
-import { storeToRefs } from 'pinia'
 import * as yup from 'yup';
-import { useSmartId } from "@/store/smartId";
+import { useSmartIdHash } from '@/composables/useSmartIdHash'
 import poolData from "./poolData"
 
-function _arrayBufferToBase64( buffer: any ) {
-    var binary = '';
-    var bytes = new Uint8Array( buffer );
-    var len = bytes.byteLength;
-    for (var i = 0; i < len; i++) {
-        binary += String.fromCharCode( bytes[ i ] );
-    }
-    return window.btoa( binary );
-}
-
-async function calculateVerificationCode(documentHash: any) {
-  const buffer = await self.crypto.subtle.digest('SHA-256', documentHash)
-  const codearray = new Uint8Array(buffer)
-  const firstbyte = codearray[30]
-  const secondbyte = codearray[31]
-  const positiveInteger = ((firstbyte << 8) + secondbyte) & 0xffff
-  const code = positiveInteger.toString()
-  const paddedCode = "0000" + code
-  return paddedCode.substring(code.length)
-}
-
 const router = useRouter()
-const smartId = useSmartId()
-const { code } = storeToRefs(smartId)
+const { generateHash } = useSmartIdHash()
 
 const schema = yup.object({
   username: yup.string().email().required('Please provide email as username'),
@@ -64,6 +41,7 @@ const schema = yup.object({
 const { handleSubmit } = useForm({
   validationSchema: schema
 })
+
 const username = useField<string>('username')
 const password = useField<string>('password')
 const rc = useField<string>('rc')
@@ -72,14 +50,8 @@ const show1 = ref(false)
 const show2 = ref(false)
 
 const submit = handleSubmit(async values => {
-  const array = new Int8Array(64)
 
-  self.crypto.getRandomValues(array);
-  const hashBuffer = await self.crypto.subtle.digest('SHA-512', array);
-  const hashArray = new Int8Array(hashBuffer)
-  const hashEncoded = _arrayBufferToBase64(hashArray)
-  code.value = await calculateVerificationCode(hashArray)
-
+  const hashEncoded = await generateHash()
   const userPool = new CognitoUserPool(poolData)
   const attributeList = [
     new CognitoUserAttribute({

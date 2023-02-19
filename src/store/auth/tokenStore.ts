@@ -1,4 +1,4 @@
-import { CognitoUserSession, CognitoIdToken, CognitoAccessToken, CognitoRefreshToken } from 'amazon-cognito-identity-js'
+import { CognitoUserSession } from 'amazon-cognito-identity-js'
 import { defineStore } from 'pinia'
 
 export const useTokenStore = defineStore('session', {
@@ -10,7 +10,7 @@ export const useTokenStore = defineStore('session', {
   },
   actions: {
     setTokens(tokens: CognitoUserSession) {
-      this.$state = {tokens, isLoggedIn: true}
+      this.$state = { tokens, isLoggedIn: true }
     }
   }
 })

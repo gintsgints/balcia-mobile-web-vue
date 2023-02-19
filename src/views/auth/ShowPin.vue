@@ -2,11 +2,10 @@
   Please approve personal coode using smartId
   <br/>
   Verification code:
-  {{ smartId.code }}
+  {{ code }}
 </template>
 
 <script lang="ts" setup>
-import { useSmartId } from "@/store/smartId";
-
-const smartId = useSmartId()
+import { useSmartIdHash } from '@/composables/useSmartIdHash'
+const { code } = useSmartIdHash()
 </script>
