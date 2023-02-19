@@ -12,6 +12,9 @@ export const useAuthStore = defineStore('session', {
   actions: {
     setAuth(tokens: CognitoUserSession, user: CognitoUser) {
       this.$state = { tokens, user, isLoggedIn: true }
+    },
+    setEmailVerified() {
+      this.$state.tokens.getIdToken().payload.email_verified = true
     }
   }
 })

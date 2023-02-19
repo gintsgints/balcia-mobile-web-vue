@@ -27,11 +27,16 @@ const routes = [
         name: 'Register',
         meta: { requiresAuth: false },
         component: () => import(/* webpackChunkName: "register" */ '@/views/auth/Register.vue'),
-      },{
+      }, {
         path: 'auth/pin',
         name: 'ShowPin',
         meta: { requiresAuth: false },
-        component: () => import(/* webpackChunkName: "register" */ '@/views/auth/ShowPin.vue'),
+        component: () => import(/* webpackChunkName: "pin" */ '@/views/auth/ShowPin.vue'),
+      }, {
+        path: 'auth/confirm',
+        name: 'ConfirmEmail',
+        meta: { requiresAuth: true },
+        component: () => import(/* webpackChunkName: "confirm" */ '@/views/auth/ConfirmEmail.vue'),
       },
     ],
   },
