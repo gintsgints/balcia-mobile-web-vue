@@ -1,0 +1,1 @@
+import{u as o}from"./useSmartIdHash-ddb2d5e6.js";import{y as s,H as t,C as e,P as n,G as r,Q as c,J as l,z as i}from"./index-9c83cfaf.js";const p=l("br",null,null,-1),h=s({__name:"ShowPin",setup(m){const{code:a}=o();return(u,d)=>(i(),t(c,null,[e(" Please approve personal coode using smartId "),p,e(" Verification code: "+n(r(a)),1)],64))}});export{h as default};
