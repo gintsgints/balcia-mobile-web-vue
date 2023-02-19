@@ -1,9 +1,9 @@
 <template>
-    <v-form fast-fail @submit.prevent="submit">
-      <v-text-field v-model="confirmCode.value.value" :error-messages="confirmCode.errorMessage.value"
-        label="Please enter confirmation code sent by email"></v-text-field>
-      <v-btn type="submit" color="primary" block class="mt-2">Sign in</v-btn>
-    </v-form>
+  <v-form fast-fail @submit.prevent="submit">
+    <v-text-field v-model="confirmCode.value.value" :error-messages="confirmCode.errorMessage.value"
+      label="Please enter confirmation code sent by email"></v-text-field>
+    <v-btn type="submit" color="primary" block class="mt-2">Confirm Email</v-btn>
+  </v-form>
 </template>
 
 <script lang="ts" setup>
